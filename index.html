@@ -1,23 +1,575 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+
+
+    <!-- Schema.org JSON-LD (Updated for Car Rental Service) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRental",
+      "name": "중고차 단기렌트 전문 업체",
+      "description": "중고차 단기렌트, 월렌트, 장기렌트 등 다양한 기간의 차량 렌트 서비스를 전문으로 제공합니다. 합리적인 가격과 신뢰할 수 있는 서비스로 고객님의 이동을 책임집니다.",
+      "url": "https://www.yourdomain.com",
+      "telephone": "+82-2-1234-5678",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "서울특별시",
+        "addressRegion": "서울특별시",
+        "postalCode": "00000",
+        "streetAddress": "어쩌구로 123"
+      },
+      "sameAs": [
+        "https://www.facebook.com/yourcarrental",
+        "https://instagram.com/yourcarrental"
+      ],
+      "image": [
+        "https://www.yourdomain.com/images/logo.png",
+        "https://www.yourdomain.com/images/car_rental_service.jpg"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "중고차 렌트 상품 목록",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "중고차 단기렌트"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "중고차 월렌트"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "중고차 장기렌트"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+
+    <style>
+      /* --- Global Reset and Typography --- */
+      * {
+        margin: 0; padding: 0; box-sizing: border-box;
+      }
+      body {
+        font-family: 'Noto Sans KR', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f0f2f5; /* Light grey background for soft aesthetic */
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      a:hover, a:focus {
+        text-decoration: underline;
+        color: #0056b3;
+      }
+      p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        color: #444;
+      }
+      ul {
+        margin-bottom: 20px;
+        padding-left: 20px;
+      }
+      li {
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+      h1, h2, h3, h4 {
+        margin-bottom: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      /* --- Header and Navigation --- */
+      header {
+        background-color: #007bff; /* Vibrant primary color */
+        color: #fff;
+        padding: 25px 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-weight: 600;
+        padding-left: 0;
+      }
+      nav ul li a {
+        color: #cceeff; /* Light color for navigation links */
+        font-size: 1.1rem;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      nav ul li a:hover, nav ul li a.active {
+        background-color: #fff;
+        color: #007bff;
+      }
+
+      /* --- Main Content Layout --- */
+      main {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 30px;
+        background: white;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+      }
+
+      /* --- Sections and Headings --- */
+      section {
+        margin-bottom: 50px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+      }
+      section.feature-box {
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+      }
+      h2 {
+        color: #007bff; /* Primary color for section titles */
+        margin-bottom: 20px;
+        font-size: 2rem;
+        border-bottom: 3px solid #e0eaff;
+        padding-bottom: 10px;
+      }
+      h3 {
+        color: #333;
+        font-size: 1.5rem;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        border-left: 5px solid #007bff;
+        padding-left: 10px;
+      }
+
+      /* --- Keywords and Tags --- */
+      .keywords-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+      .keywords-list span {
+        background-color: #e0f2f1;
+        color: #00796b; /* Teal color for tags */
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease;
+      }
+      .keywords-list span:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* --- Visual Elements: Table and Graph Styles --- */
+      .data-table, .data-graph {
+        margin: 30px 0;
+        overflow-x: auto;
+      }
+      .data-table table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 1rem;
+      }
+      .data-table th, .data-table td {
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+      }
+      .data-table th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: 700;
+      }
+      .data-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      /* --- CTA Button Design --- */
+      .cta-button {
+        display: inline-block;
+        background-color: #28a745; /* Green for action */
+        color: white;
+        padding: 16px 32px;
+        font-size: 1.25rem;
+        border-radius: 30px;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 20px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+      }
+      .cta-button:hover, .cta-button:focus {
+        background-color: #218838;
+        transform: translateY(-2px);
+      }
+
+      /* --- Image and Media --- */
+      .content-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* --- Interactive Form/Input Fields for Dwell Time Optimization --- */
+      form.inquiry-form {
+        background-color: #f7f9fc;
+        padding: 25px;
+        border-radius: 10px;
+        border: 1px solid #e0eaff;
+      }
+      form label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+      }
+      form input[type="text"], form input[type="email"], form input[type="tel"], form select, form textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      form textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+      form button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        width: 100%;
+        transition: background-color 0.3s ease;
+      }
+      form button[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      /* --- Footer --- */
+      footer {
+        text-align: center;
+        padding: 30px 10px;
+        background-color: #343a40;
+        color: #ddd;
+        font-size: 0.9rem;
+        margin-top: 60px;
+      }
+      footer address {
+        font-style: normal;
+        margin-top: 10px;
+      }
+
+      /* --- Responsive adjustments --- */
+      @media (max-width: 768px) {
+        nav ul {
+          flex-direction: column;
+          gap: 10px;
+        }
+        main {
+          margin: 20px auto;
+          padding: 20px;
+        }
+        header h1 {
+          font-size: 2rem;
+        }
+        section {
+          padding: 15px;
+        }
+        .cta-button {
+          width: 100%;
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>중고차 단기렌트: 2026년 최적의 선택 가이드</h1>
+        <nav aria-label="주요 메뉴">
+            <ul>
+                <li><a href="#service-intro">서비스 소개</a></li>
+                <li><a href="#advantages-disadvantages">장단점 분석</a></li>
+                <li><a href="#price-comparison">비용 및 견적</a></li>
+                <li><a href="#keywords">키워드 분석</a></li>
+                <li><a href="#contact">상담 및 문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <!-- Section 1: Introduction and Key Service Features -->
+        <section id="service-intro">
+            <h2>중고차 단기렌트, 스마트한 이동의 시작</h2>
+            <p>2026년, 차량 이용 방식이 빠르게 변화하고 있습니다. 과거에는 차량 구매나 장기 렌트가 일반적이었지만, 최근에는 합리적인 <strong>중고차 단기렌트</strong>가 새로운 대안으로 각광받고 있습니다. 중고차 단기렌트는 짧은 기간 동안 차량이 필요하거나, 신차 구매 전 다양한 모델을 경험하고 싶은 고객들에게 최적의 솔루션을 제공합니다.</p>
+            <p>저희 업체는 투명한 <strong>중고차 단기렌트 가격</strong>을 제시하며, 고객님의 니즈에 맞는 맞춤형 렌트 상품을 제공합니다. 급하게 차량이 필요하거나, 특정 기간 동안만 차량을 이용해야 할 때, 복잡한 절차 없이 신속하게 차량을 인도받을 수 있습니다. 또한, <a href="#price-comparison" class="internal-link">중고차 단기렌트 견적</a>을 통해 합리적인 <strong>비용</strong>을 바로 확인할 수 있습니다.</p>
+            <img class="content-image" src="https://images.pexels.com/photos/1035108/pexels-photo-1035108.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="중고차 단기렌트 서비스 소개 이미지">
+            <a href="#inquiry-form" class="cta-button" aria-label="맞춤형 렌트 상담 신청하기">무료 견적 상담 받기</a>
+        </section>
+
+        <!-- Section 2: In-depth Analysis of Advantages and Disadvantages -->
+        <section id="advantages-disadvantages">
+            <h2>중고차 단기렌트 장단점 심층 분석</h2>
+            <p>중고차 단기렌트가 인기를 끄는 이유는 명확한 <strong>장점</strong> 때문입니다. 하지만 현명한 선택을 위해서는 단점 또한 정확히 파악하는 것이 중요합니다. 저희는 고객님들이 충분한 정보를 바탕으로 결정할 수 있도록 <strong>장단점</strong>을 상세하게 비교 분석해 드립니다.</p>
+
+            <h3><i class="fas fa-check-circle"></i> 중고차 단기렌트의 주요 장점 (Advantages)</h3>
+            <ul>
+                <li><strong>뛰어난 경제성:</strong> 신차 장기 렌트에 비해 <strong>비용</strong>이 저렴하며, 특히 단기적으로 차량이 필요할 경우 큰 폭의 <strong>절약</strong>이 가능합니다. 차량 구매 시 발생하는 취득세, 등록세, 보험료 등 초기 목돈 지출이 없습니다.</li>
+                <li><strong>간편한 차량 관리:</strong> 렌트 기간 동안 발생하는 차량 정비 및 관리는 렌트 업체에서 책임집니다. 고객은 오직 주유만 하면 되는 편리함이 있습니다.</li>
+                <li><strong>유연한 계약 기간:</strong> 최소 1일에서 최대 1년까지, 고객의 일정에 맞춰 자유롭게 계약 기간을 선택할 수 있습니다. 출장, 여행, 사업 등 다양한 상황에 맞춰 유연하게 대처 가능합니다.</li>
+                <li><strong>신속한 차량 인도:</strong> 신차 구매처럼 수개월을 기다릴 필요 없이 계약 즉시 차량을 배정받아 이용할 수 있습니다.</li>
+            </ul>
+
+            <h3><i class="fas fa-times-circle"></i> 고려해야 할 단점 및 주의사항 (Disadvantages)</h3>
+            <ul>
+                <li><strong>보험료 포함 여부:</strong> 단기렌트의 <strong>보험</strong> 조건은 업체마다 차이가 있습니다. 렌트 <strong>비용</strong>에 보험료가 포함되어 있는지, 사고 시 자기 부담금은 얼마인지 꼼꼼하게 확인해야 합니다. <strong>저렴한곳</strong>만 찾다가 낭패를 볼 수 있습니다.</li>
+                <li><strong>차량 상태 및 모델 선택:</strong> 중고차 단기렌트이므로 차량의 연식과 주행 거리를 사전에 확인해야 합니다. <strong>전문 업체</strong>를 이용하면 차량 상태가 양호한 차량을 제공받을 수 있습니다.</li>
+                <li><strong>장기 이용 시 비효율성:</strong> 단기 이용에는 유리하지만, 2~3년 이상 장기간 이용할 경우 장기 렌트나 할부 구매보다 <strong>총 비용</strong>이 높아질 수 있습니다.</li>
+            </ul>
+
+            <p><strong>내돈내산 후기</strong>를 참고하거나, <a href="#inquiry-form" class="internal-link">상담</a>을 통해 고객님의 상황에 맞는 <strong>중고차 단기렌트 장단점</strong>을 파악하는 것이 중요합니다.</p>
+
+        </section>
+
+        <!-- Section 3: Price Guide, Comparison Table, and Financial Keywords -->
+        <section id="price-comparison">
+            <h2>중고차 단기렌트 비용 및 견적 비교: 2026년 가이드</h2>
+            <p><strong>중고차 단기렌트 금액</strong>은 차량 모델, 연식, 렌트 기간, 보험 조건에 따라 크게 달라집니다. <strong>평균 가격</strong>을 정확히 알기 위해서는 여러 업체의 <strong>견적</strong>을 비교해보는 것이 필수적입니다. 저희는 투명한 <strong>가격</strong> 정책으로 고객님의 합리적인 선택을 돕습니다.</p>
+
+            <h3><i class="fas fa-table"></i> 모델별 중고차 단기렌트 예상 비용 비교표 (2026년 기준)</h3>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>차량 모델 (기준 연식: 3~5년)</th>
+                            <th>단기렌트 (1일 기준) 예상 비용</th>
+                            <th>월 렌트 (30일 기준) 예상 비용</th>
+                            <th>비고 (주요 장점)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>경차 (모닝, 레이)</td>
+                            <td>40,000원 ~ 60,000원</td>
+                            <td>400,000원 ~ 600,000원</td>
+                            <td>최저가, 출퇴근 및 단거리 이동에 적합</td>
+                        </tr>
+                        <tr>
+                            <td>준중형 (아반떼, K3)</td>
+                            <td>50,000원 ~ 80,000원</td>
+                            <td>500,000원 ~ 750,000원</td>
+                            <td>연비 효율 우수, 가장 일반적인 선택</td>
+                        </tr>
+                        <tr>
+                            <td>중형 세단 (쏘나타, K5)</td>
+                            <td>70,000원 ~ 100,000원</td>
+                            <td>700,000원 ~ 950,000원</td>
+                            <td>편안한 승차감, 중장거리 운전에 적합</td>
+                        </tr>
+                        <tr>
+                            <td>SUV (스포티지, 투싼)</td>
+                            <td>80,000원 ~ 110,000원</td>
+                            <td>800,000원 ~ 1,100,000원</td>
+                            <td>넉넉한 공간, 레저 및 가족 단위 이용에 추천</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>* 위 <strong>예상 금액</strong>은 렌트 업체, 차량 상태, 보험 조건에 따라 <strong>차이점</strong>이 발생할 수 있으므로, 정확한 <strong>견적</strong>은 반드시 <a href="#inquiry-form" class="internal-link">문의하기</a>를 통해 확인해야 합니다.</p>
+
+            <h3><i class="fas fa-chart-line"></i> 중고차 단기렌트 비용 절감 팁</h3>
+            <p><strong>중고차 단기렌트 비용</strong>을 절감하기 위한 몇 가지 팁이 있습니다. 렌트 기간이 길어질수록 1일당 <strong>가격</strong>이 <strong>할인</strong>되는 경우가 많습니다. 또한, <strong>신규 가입 혜택</strong>이나 특정 기간 <strong>이벤트</strong>를 활용하면 <strong>저렴한곳</strong>을 찾을 수 있습니다. <strong>현금지원</strong>이나 <strong>상품권</strong> 제공 등 다양한 <strong>혜택</strong>을 비교해 보세요. 특히 주말보다는 주중 렌트가, 성수기보다는 비수기 렌트가 <strong>가격</strong>이 <strong>싼곳</strong>이 많습니다.</p>
+
+        </section>
+
+        <!-- Section 4: Related Keywords and SEO for Discovery -->
+        <section id="keywords" class="feature-box">
+            <h2>중고차 단기렌트 관련 키워드 분석 및 검색 노출 전략</h2>
+            <p>네이버, 구글 등 주요 검색 엔진에서 고객들이 어떤 키워드로 <strong>중고차 단기렌트 업체</strong>를 찾는지 분석하는 것은 중요합니다. 저희는 다양한 검색 의도에 맞춰 콘텐츠를 구성하여 <strong>상위 노출</strong>을 목표로 합니다. 아래는 주요 키워드 그룹입니다.</p>
+
+            <h3><i class="fas fa-search"></i> 자동완성 키워드 (가장 많이 검색되는 키워드)</h3>
+            <div class="keywords-list" aria-label="자동완성 키워드 목록">
+                <span>중고차 단기렌트</span>
+                <span>중고차 렌트 비용</span>
+                <span>중고차 단기 렌트카</span>
+                <span>단기렌트카 가격 비교</span>
+                <span>중고차 월렌트</span>
+                <span>단기 렌트카 추천</span>
+                <span>단기렌트카 저렴한곳</span>
+                <span>단기렌트카 전문 업체</span>
+            </div>
+
+            <h3><i class="fas fa-link"></i> 연관 키워드 (심화 검색 의도를 가진 키워드)</h3>
+            <div class="keywords-list" aria-label="연관 키워드 목록">
+                <span>단기렌트 보험료</span>
+                <span>중고차 렌트 장단점</span>
+                <span>운전자 나이 제한 없는 렌트카</span>
+                <span>단기 렌트카 내돈내산 후기</span>
+                <span>2026년 중고차 렌트 시장 동향</span>
+                <span>개인 사업자 중고차 렌트 혜택</span>
+                <span>중고차 단기렌트 대여 조건</span>
+            </div>
+
+            <h3><i class="fas fa-tag"></i> 함께 많이 찾는 카테고리 (롱테일 키워드)</h3>
+            <div class="keywords-list" aria-label="함께 많이 찾는 키워드 목록">
+                <span>중고차 단기렌트 신용등급</span>
+                <span>단기렌트 사은품 및 지원금</span>
+                <span>중고차 렌트 후기 모음</span>
+                <span>유튜브 중고차 렌트 비교</span>
+                <span>네이버 렌트카 순위</span>
+                <span>중고차 렌트 가입 혜택</span>
+                <span>중고차 단기렌트 이벤트</span>
+            </div>
+
+            <p>이러한 키워드들을 자연스럽게 문맥에 녹여내어, 검색 사용자들이 원하는 정보를 정확하게 제공함으로써 체류 시간을 증가시키고 검색 엔진의 신뢰도를 높입니다.</p>
+
+        </section>
+
+        <!-- Section 5: External Links for Credibility and Information -->
+        <section id="external-info">
+            <h2>공신력 있는 정보 출처 및 관련 법규</h2>
+            <p>신뢰할 수 있는 <strong>중고차 단기렌트 업체</strong>를 선택하기 위해서는 관련 법규와 시장 정보를 확인하는 것이 중요합니다. 아래는 중고차 시장 및 렌트 관련 정보를 얻을 수 있는 공신력 있는 외부 사이트 목록입니다. (2026년 기준)</p>
+            <ul>
+                <li><a href="https://www.law.go.kr/법령/여객자동차운수사업법" target="_blank">여객자동차 운수사업법 (국가법령정보센터):</a> 렌터카 사업의 법적 근거와 규정을 확인할 수 있습니다.</li>
+                <li><a href="https://korea.kr/policy/main.do" target="_blank">대한민국 정책브리핑 (중고차 관련 정책):</a> 정부의 중고차 시장 관련 정책 및 소비자 보호 정보를 얻을 수 있습니다.</li>
+                <li><a href="https://www.kostat.go.kr/portal/korea/index.action" target="_blank">통계청 (자동차 등록 현황):</a> 국내 자동차 등록 및 중고차 시장 규모 통계를 확인할 수 있습니다.</li>
+                <li><a href="https://www.kca.go.kr/main.do" target="_blank">한국소비자원:</a> 렌터카 이용 시 소비자 분쟁 해결 기준 및 피해 구제 사례를 확인할 수 있습니다.</li>
+                <li><a href="https://namu.wiki/w/%EB%A0%8C%ED%84%80%EC%B9%B4" target="_blank">나무위키 - 렌터카:</a> 렌터카 산업에 대한 일반적인 정보와 역사, 종류 등에 대한 개요를 제공합니다.</li>
+            </ul>
+        </section>
+
+        <!-- Section 6: User Engagement - Inquiry Form and Calculator (Dwell Time Increase) -->
+        <section id="inquiry-form">
+            <h2>실시간 맞춤 견적 신청 및 상담</h2>
+            <p>중고차 단기렌트 <strong>예상 비용</strong>을 바로 확인하고 싶으신가요? 고객님의 이용 목적과 기간에 맞는 정확한 <strong>견적</strong>을 받아보세요. 아래 양식을 작성해 주시면 전문 상담원이 <strong>저렴한곳</strong>을 찾아 신속하게 안내해 드립니다. <strong>신규 가입 혜택</strong>이나 현재 진행 중인 <strong>이벤트</strong>를 놓치지 마세요!</p>
+            <form class="inquiry-form">
+                <label for="name">이름:</label>
+                <input type="text" id="name" name="name" required placeholder="예: 홍길동">
+
+                <label for="contact-number">연락처:</label>
+                <input type="tel" id="contact-number" name="contact-number" required placeholder="예: 010-1234-5678">
+
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="email" placeholder="예: example@email.com">
+
+                <label for="car-model">희망 차량 모델 (선택):</label>
+                <select id="car-model" name="car-model">
+                    <option value="">-- 모델 선택 --</option>
+                    <option value="경차">경차 (모닝, 레이)</option>
+                    <option value="준중형">준중형 (아반떼, K3)</option>
+                    <option value="중형">중형 (쏘나타, K5)</option>
+                    <option value="SUV">SUV (스포티지, 투싼)</option>
+                    <option value="대형">대형/승합</option>
+                </select>
+
+                <label for="rental-period">희망 렌트 기간:</label>
+                <select id="rental-period" name="rental-period" required>
+                    <option value="">-- 기간 선택 --</option>
+                    <option value="1일~7일">1일 ~ 7일 (단기)</option>
+                    <option value="1주일~1개월">1주일 ~ 1개월 (단기)</option>
+                    <option value="1개월~3개월">1개월 ~ 3개월 (월렌트)</option>
+                    <option value="3개월 이상">3개월 이상 (장기)</option>
+                </select>
+
+                <label for="message">추가 문의사항 (예: 보험 조건, 픽업 장소):</label>
+                <textarea id="message" name="message" placeholder="자세한 문의 내용을 남겨주시면 정확한 상담에 도움이 됩니다."></textarea>
+
+                <button type="submit">무료 견적 요청하기</button>
+            </form>
+        </section>
+
+        <!-- Section 7: Detailed Information on Insurance and Rental Conditions -->
+        <section id="rental-conditions">
+            <h2>중고차 단기렌트: 보험 및 계약 조건 상세 안내</h2>
+            <p><strong>중고차 단기렌트</strong>는 신차 렌트와 달리 차량의 연식과 주행 거리가 다양하므로 보험 조건과 계약 사항을 꼼꼼히 확인해야 합니다. <strong>저렴한곳</strong>만 찾다 보면 보험 보장 범위가 좁거나, <strong>내돈내산 후기</strong>에서 언급된 것처럼 예기치 않은 추가 <strong>비용</strong>이 발생할 수 있습니다.</p>
+            <h3><i class="fas fa-umbrella"></i> 보험 조건 상세 비교</h3>
+            <p>중고차 단기렌트 시 가장 중요한 부분은 보험입니다. 일반적으로 렌트 업체는 종합보험(대인, 대물, 자손)에 가입되어 있지만, 중요한 것은 '자차 보험(차량손해면책제도)'입니다. 자차 보험은 렌트 차량 손상 시 고객이 부담해야 할 금액을 보상해주는 제도입니다. 자차 보험 가입 여부와 자기 부담금(면책금)을 반드시 확인해야 합니다. <strong>가입</strong> 시 면책금을 0원~50만원 사이로 선택할 수 있으며, 면책금이 낮을수록 일일 렌트료가 높아집니다.</p>
+
+            <h3><i class="fas fa-id-card"></i> 운전자 조건 및 필요 서류</h3>
+            <p>렌트카 <strong>가입</strong> 시 운전자 연령과 운전 경력 기준을 충족해야 합니다. 대부분의 <strong>중고차 단기렌트 업체</strong>는 만 21세 이상, 운전 경력 1년 이상을 요구합니다. <strong>신규 가입</strong> 고객의 경우 조건을 완화해주는 <strong>이벤트</strong>를 진행하는 곳도 있습니다. 필요 서류는 운전면허증 사본, 신분증(주민등록증 또는 여권) 사본이 기본입니다.</p>
+
+            <h3><i class="fas fa-hand-holding-usd"></i> 결제 및 보증금</h3>
+            <p>대부분의 <strong>중고차 단기렌트</strong>는 <strong>예상 비용</strong>을 선불로 결제합니다. <strong>보증금</strong>은 업체에 따라 요구하는 곳도 있고 요구하지 않는 곳도 있습니다. <strong>보증금</strong>은 차량 반납 시 환불되지만, 차량 파손이나 과태료 발생 시 공제될 수 있으므로 계약서를 꼼꼼히 확인해야 합니다.</p>
+        </section>
+
+        <!-- Section 8: The Future of Short-Term Rental in 2026 -->
+        <section id="market-outlook">
+            <h2>2026년 중고차 단기렌트 시장 전망 및 동향</h2>
+            <p>최근 중고차 <strong>단기렌트</strong> 시장은 급격한 성장을 보이고 있습니다. 2026년에도 이러한 트렌드는 지속될 것으로 예상됩니다. 특히, '소유'에서 '공유'로의 패러다임 변화와 고물가 시대의 <strong>비용 절감</strong> 니즈가 맞물려 <strong>중고차 단기렌트</strong>의 수요는 더욱 증가할 것입니다. 또한, <strong>네이버</strong>, <strong>구글</strong> 등 포털 사이트의 검색을 통해 <strong>저렴한곳</strong>을 찾는 소비자가 늘면서, <strong>중고차 단기렌트 업체</strong> 간의 <strong>가격 비교</strong> 경쟁도 심화될 것입니다.</p>
+            <p>저희는 이러한 시장 변화에 발맞춰 <strong>신규 가입 혜택</strong> 및 다양한 <strong>이벤트</strong>를 제공하고 있으며, <strong>전문 업체</strong>로서 고객 만족도를 최우선으로 생각합니다. <a href="https://www.yourdomain.com" class="internal-link">중고차 단기렌트</a>에 대한 궁금증은 언제든지 문의해 주시면 친절하게 답변해 드리겠습니다.</p>
+        </section>
+
+        <!-- Section 9: Detailed FAQ for Common Queries (Dwell Time Increase) -->
+        <section id="faq">
+            <h2>자주 묻는 질문 (FAQ)</h2>
+            <div class="faq-accordion">
+                <details>
+                    <summary>Q1: 중고차 단기렌트와 신차 렌트의 가장 큰 <strong>차이점</strong>은 무엇인가요?</summary>
+                    <p>A: 가장 큰 <strong>차이점</strong>은 <strong>비용</strong>과 차량 상태입니다. 중고차 단기렌트는 신차 렌트보다 <strong>가격</strong>이 <strong>저렴</strong>하며, 차량 인도까지 걸리는 시간이 짧습니다. 신차 렌트가 최신 모델을 이용할 수 있지만, 중고차 렌트는 연식이 있는 차량을 제공하며, <strong>단기</strong> 이용 시 <strong>경제성</strong>이 뛰어납니다.</p>
+                </details>
+                <details>
+                    <summary>Q2: <strong>중고차 단기렌트 비용</strong>은 <strong>얼마</strong> 정도 <strong>예상</strong>해야 하나요?</summary>
+                    <p>A: <strong>평균 금액</strong>은 차량 모델과 기간에 따라 크게 다릅니다. 위에 제시된 <strong>비교표</strong>를 참고하시거나, 상담 신청을 통해 고객님의 조건에 맞는 정확한 <strong>견적</strong>을 받아보시는 것이 좋습니다. 일반적으로 렌트 기간이 길어질수록 1일당 <strong>가격</strong>은 <strong>할인</strong>됩니다.</p>
+                </details>
+                <details>
+                    <summary>Q3: <strong>중고차 단기렌트</strong> 이용 시 <strong>보험</strong> 처리는 어떻게 되나요?</summary>
+                    <p>A: 모든 렌터카는 의무적으로 종합보험에 가입되어 있습니다. 사고 발생 시 렌터카 업체에 연락하여 사고 접수를 하시면 됩니다. 다만, 자차 보험 가입 여부에 따라 고객님이 부담해야 하는 <strong>자기부담금(면책금)</strong>이 달라지므로, 계약 시 보험 조건을 반드시 확인해야 합니다.</p>
+                </details>
+                <details>
+                    <summary>Q4: <strong>내돈내산 후기</strong>를 보면 차량 상태에 대한 불만이 있던데, 어떻게 확인해야 하나요?</summary>
+                    <p>A: <strong>전문 업체</strong>를 이용하는 것이 중요합니다. 저희는 출고 전 꼼꼼한 차량 점검을 진행합니다. 차량 인수 시 외관 및 내부 상태를 꼼꼼히 확인하고, 계약서에 기재된 내용과 일치하는지 확인해야 합니다. <strong>후기</strong>가 많은 <strong>추천</strong> 업체를 선택하면 상대적으로 안심할 수 있습니다.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- Section 10: Final CTA and Contact Information -->
+        <section id="contact">
+            <h2>중고차 단기렌트 전문 상담 및 문의</h2>
+            <p><strong>중고차 단기렌트</strong>에 대한 궁금증이 해결되셨나요? <strong>저렴한곳</strong>, <strong>전문 업체</strong>, <strong>비용</strong> 등 무엇이든 좋습니다. 언제든지 전화 주시면 친절한 상담을 약속드립니다. 고객님의 상황에 맞는 최적의 <strong>중고차 단기렌트</strong> 솔루션을 제공해 드립니다.</p>
+            <address>
+                <strong>중고차 단기렌트 전문 업체</strong><br />
+                전화: <a href="tel:+82-2-1234-5678" class="internal-link">+82-2-1234-5678</a><br />
+                운영 시간: 평일 09:00 - 18:00 (주말 및 공휴일 휴무)<br />
+                이메일: <a href="mailto:contact@yourdomain.com" class="internal-link">contact@yourdomain.com</a><br />
+            </address>
+            <a href="tel:+82-2-1234-5678" class="cta-button">지금 바로 전화 상담하기</a>
+        </section>
     </main>
-  </body>
-</html>
+
+  
